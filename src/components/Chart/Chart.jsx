@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 import styles from './Chart.module.css';
 
-const Chart = ({ data: { confirmed, recovered, deaths } }) => {
-
-  const [fetchData, setFetchData] = useState([]);
-
-  useEffect (() => {
-    const fetchAPI = () => {
-      setFetchData(fetchData)
-    }
-    
-    fetchAPI();
-  });
+const Chart = ( { confirmed, recovered, deaths } ) => {
 
   const barChart = (
-    confirmed, recovered, deaths
+    confirmed && recovered && deaths
       ? (
         <Bar 
           data={{
@@ -33,7 +23,7 @@ const Chart = ({ data: { confirmed, recovered, deaths } }) => {
           }}
           options={{
             legend: { display: false},
-            title: { display: true, text:`Current state in ${fetchData}Lithuania`},
+            title: { display: true, text:`Current state in Lithuania`},
           }}
         />
       ) : null

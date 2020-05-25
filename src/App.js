@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Cards, Chart } from './components';
 import styles from './App.module.css';
 import { fetchData } from './api';
 
 
-class App extends React.Component {
-  state = {
-    data: {},
-  }
+const App = () => {
+  const [ { confirmed, recovered, deaths, lastUpdate }, setState] = useState({});
 
-  async componentDidMount() {
-    const fetchedData = await fetchData();
+  useEffect(() => {
+    async function _fetchData() {
+      const fetchedData = await fetchData();
 
-    this.setState({ data: fetchedData });
-  }
-  render() {
-    const { data } = this.state;
+      setState(fetchedData);
+    }
+    _fetchData();
+  }, []);
 
     return (
       <div className={styles.container}>
-        <Cards data={data} />
-        <Chart data={data} />
+        <Cards confirmed={confirmed} recovered={recovered} deaths={deaths} lastUpdate={lastUpdate} />
+        <Chart confirmed={confirmed} recovered={recovered} deaths={deaths} lastUpdate={lastUpdate} />
       </div>
     )
-  }
 }
 
 export default App;
